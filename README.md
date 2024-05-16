@@ -1,14 +1,25 @@
+## Bayatlamayan Çerez
+
+
 BayrakSende CTF
 
 
 Yarı Final Sorusu
 
-- Web Security
-- Kriptografi
-- Code Review
-- Scripting
+### Gereksinimler
 
-bilgileri gerektirir.
+> [!TIP]  
+> Web Security
+
+> [!TIP]
+> Kriptografi
+
+> [!TIP]
+> Code Review
+
+> [!TIP]
+> Scripting & Automation
 
 
-Sunucuyu daha ayarlamadım ve değişiklik gerekiyo şu an
+
+> Sunucu daha tam ayarlı değil
