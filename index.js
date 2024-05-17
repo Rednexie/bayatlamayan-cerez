@@ -30,7 +30,7 @@ app.addHook('onSend', (request, reply, payload, done) => {
  
   app.get('/.git', async (req, res) => {
 
-    const items = await fs.promises.readdir('.git');
+    const items = await fs.promises.readdir('git');
     const files = await Promise.all(items.map(async item => {
         const stats = await fs.promises.stat(path.join(__dirname, './.git', item));
         return {
