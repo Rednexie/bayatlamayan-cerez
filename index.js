@@ -29,6 +29,11 @@ app.register(require('@fastify/static'), {
     root: path.join(__dirname, 'static'),
 })
 
+app.register(require('@fastify/cookie'), {
+    hook: "onRequest",
+    secret: require('crypto').randomUUID(),
+})
+
 
 app.addHook('onSend', (request, reply, payload, done) => {
     // Set custom headers here
@@ -60,14 +65,30 @@ app.get('/signup', (req, res) => {
 })
 
 
+app.addHook('onRequest', (req, res, next) => {
+    if(req.cookies.leblebi === "a01e29777fa3a258ea9164a85d01935470660891ec67d97fb7d293c8c277e1c9fb2aa431227209fd6c1893a2830bfa5068e2ed2d6d7fbd8f393024336097a267"){
+        req.cook
+    }
+    });
+
 app.post('/login', (req, res) => {
     const { kullanici, parola } = req.body;
-    if(typeof kullanici !== "string" || typeof parola !== "string") return res.render('login', { show: true, title: "Tüh!", icon: "error", text: "Kullanıcı adı ve parola alanları gereklidir. ", confirmButtonText: "tamam!"})
+    if(typeof kullanici !== "string" || typeof parola !== "string") return res.view('login', { show: true, title: "Tüh!", icon: "error", text: "Kullanıcı adı ve parola alanları gereklidir. ", confirmButtonText: "tamam!"})
     
     try{
-        libSQL.prepare
+        const row = libSQL.prepare('SELECT * FROM leblebi WHERE kullanici_adi = ? AND parola = ?').get(kullanici, parola)
+        if(!row) return res.view('login', { show: true, title: "Yok!", icon: "error", text: "Kullanıcı adı ve parola kombinasyonu eşleşmedi. ", confirmButtonText: "tamam!"})
+        else { res.view('login'), { show: true, title: "2FA", icon: "success", text: "yeni bir IP adresinden giriş yapmaktasınuz, lütfen e-postanızı kontrol edin "
+    }}
+    }catch(err){
+        console.error(err)
+        return res.view('login', { show: true, title: "Başarı", icon: 'success', text: "tüh", confirmButtonText: "tmm" })
     }
 })  
+
+app.post('/signup', (req, res) => {
+
+})
 
 
 app.listen({ host: "0.0.0.0", port }, (err, addr) => {

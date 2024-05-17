@@ -4,16 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --env-file .env index.js",
+    "test": "node --watch-path . --env-file .env index.js"
   },
   "author": "Rednexie",
   "type": "commonjs",
   "license": "ISC",
   "dependencies": {
+    "@fastify/cookie": "^9.3.1",
     "@fastify/static": "^7.0.4",
     "@fastify/view": "^9.1.0",
     "ejs": "^3.1.10",
     "fastify": "^4.27.0",
+    "fastify-cookie": "^5.7.0",
     "libsql": "^0.3.18"
   }
 }
