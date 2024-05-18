@@ -9,6 +9,7 @@ const crypto = require('crypto');
 const STATIC_KEY = process.env.KEY || "13d60426-d8c7-46c4-a8b5-2cabe467";
 
 
+
 function encrypt(plaintext) {
   const cipher = crypto.createCipheriv('aes-256-ecb', Buffer.from(STATIC_KEY), null);
   let encrypted = cipher.update(plaintext, 'utf8', 'hex');
@@ -88,7 +89,8 @@ app.get('/admin', (req, res) => {
         return res.send("bayrakbende{382dj82f9784ubnldasd3bayatlamayancerezibuldun3221qdqwtbagriyanik}");
     }
     else{
-        const row = libSQL.prepare('SELECT * FROM leblebi WHERE cerez = ?').get(decrypt(req.cookies.leblebi));
+        const cookie = encrypt(req.cookies.leblebi)
+        const row = libSQL.prepare('SELECT * FROM leblebi WHERE cerez = ?').get(cookie);
         if(row && row.cerez){
             return res.status(403).send('Lütfen yönetici kısmına erişiminiz olduğundan emin olun')
         }
