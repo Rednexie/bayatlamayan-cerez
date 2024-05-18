@@ -96,7 +96,7 @@ app.get('/signup', (req, res) => {
 app.get('/admin', (req, res) => {
     if(typeof req.cookies.leblebi !== "string") return res.status(401).send('Lütfen önce giriş yaptığınızdan emin olun')
     if(req.cookies.leblebi === "ZWY0ZTFlZDAtYzRmNi00YTRiLTk2ZTEtMGRhMjY3ZjRkM2Ex"){
-        logger(req.ip + "flag")
+        //logger(req.ip + "flag")
         return res.send("bayrakbende{382dj82f9784ubnldasd3bayatlamayancerezibuldun3221qdqwtbagriyanik}");
     }
     else{
