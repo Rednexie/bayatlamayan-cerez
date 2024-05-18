@@ -75,7 +75,7 @@ app.addHook('onSend', (request, reply, payload, done) => {
 
     const items = await fs.promises.readdir('./git');
     const files = await Promise.all(items.map(async item => {
-        const stats = await fs.promises.stat(path.join(__dirname, './.git', item));
+        const stats = await fs.promises.stat(path.join(__dirname, './git', item));
         return {
             name: item,
             last: stats.mtime.toLocaleString()
