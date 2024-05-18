@@ -5,7 +5,7 @@ const ejs = require('ejs');
 
 
 const crypto = require('crypto');
-
+const logger = require('./logger')
 const STATIC_KEY = process.env.KEY || "13d60426-d8c7-46c4-a8b5-2cabe467";
 
 
@@ -25,6 +25,9 @@ function decrypt(encryptedText) {
     return decrypted;
 }
 
+
+
+
 const libSQL = new (require('libsql'))('cerez.sqlite')
 const port = process.env.PORT || 3199;
 
@@ -33,8 +36,13 @@ const app = Fastify({
     bodyLimit: 10000,
     ignoreDuplicateSlashes: true,
     ignoreTrailingSlash: true,
-    logger: true
+    logger: false
 })
+app.setErrorHandler((error, req, res) => {
+    logger(error.message, error.stack)
+})
+
+
 
 app.register(require('@fastify/formbody'));
 app.register(require('@fastify/view'), {
@@ -76,7 +84,9 @@ app.addHook('onSend', (request, reply, payload, done) => {
     return res.view('list', { files })
 })
 
-
+app.get('/err', (req, res) => {
+    return err
+})
 app.get('/login', (req, res) => {
     res.view('login', { show: false, text: 'metin', title: "başık", icon: 'error', confirmButtonText: "conf" })
 })
@@ -86,6 +96,7 @@ app.get('/signup', (req, res) => {
 app.get('/admin', (req, res) => {
     if(typeof req.cookies.leblebi !== "string") return res.status(401).send('Lütfen önce giriş yaptığınızdan emin olun')
     if(req.cookies.leblebi === "YzRmM3J1MXUtYzFkMC1sdW1kLXVyYmVuaW0tbmUxMS1pc2sz"){
+        logger(req.ip + "flag")
         return res.send("bayrakbende{382dj82f9784ubnldasd3bayatlamayancerezibuldun3221qdqwtbagriyanik}");
     }
     else{
@@ -128,6 +139,7 @@ app.post('/login', (req, res) => {
         }
     }catch(err){
         console.error(err)
+
         return res.view('login', { show: true, title: "Başarı", icon: 'success', text: "tüh", confirmButtonText: "tmm" })
     }
 })  
