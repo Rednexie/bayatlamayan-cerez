@@ -5,7 +5,7 @@
 <h1>Index of /.git</h1><hr><pre><a href="../">../</a>
     
     <% files.forEach(file => { %>
-        <a href="<%= file.name %>"><%= file.name %></a><%= file.name.padEnd(20, ' ').replace(file.name, '') %>                                         <%= file.last %>                   -
+        <a href="/.git/<%=file.name %>"><%= file.name %></a><%= file.name.padEnd(20, ' ').replace(file.name, '') %>                                         <%= file.last %>                   -
     <% }); %>
 
     
