@@ -6,4 +6,4 @@ function decrypt(encryptedText) {
   }
 
 
-  console.log(decrypt(process.argv[2]))
+console.log(decrypt(process.argv[2]))

@@ -4,6 +4,26 @@ const path = require('path')
 const ejs = require('ejs');
 
 
+const crypto = require('crypto');
+
+const STATIC_KEY = process.env.KEY || "13d60426-d8c7-46c4-a8b5-2cabe467";
+
+
+function encrypt(plaintext) {
+  const cipher = crypto.createCipheriv('aes-256-ecb', Buffer.from(STATIC_KEY), null);
+  let encrypted = cipher.update(plaintext, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return encrypted;
+}
+
+
+function decrypt(encryptedText) {
+    const decipher = require('crypto').createDecipheriv('aes-256-ecb', Buffer.from(STATIC_KEY), null);
+    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+}
+
 const libSQL = new (require('libsql'))('cerez.sqlite')
 const port = process.env.PORT || 3199;
 
@@ -15,7 +35,7 @@ const app = Fastify({
     logger: true
 })
 
-
+app.register(require('@fastify/formbody'));
 app.register(require('@fastify/view'), {
     engine: { ejs },
     root: path.join(__dirname, './views')
@@ -52,24 +72,46 @@ app.addHook('onSend', (request, reply, payload, done) => {
             last: stats.mtime.toLocaleString()
         }
     }))
-    console.log(files)
     return res.view('list', { files })
 })
 
 
 app.get('/login', (req, res) => {
-    res.view('login', { show: true, text: 'metin', title: "başık", icon: 'error', confirmButtonText: "conf" })
-})
-app.get('/signup', (req, res) => {
     res.view('login', { show: false, text: 'metin', title: "başık", icon: 'error', confirmButtonText: "conf" })
 })
-
-
-app.addHook('onRequest', (req, res, next) => {
-    if(req.cookies.leblebi === "a01e29777fa3a258ea9164a85d01935470660891ec67d97fb7d293c8c277e1c9fb2aa431227209fd6c1893a2830bfa5068e2ed2d6d7fbd8f393024336097a267"){
-        req.cook
+app.get('/signup', (req, res) => {
+    res.view('signup', { show: false, text: 'metin', title: "başık", icon: 'error', confirmButtonText: "conf" })
+})
+app.get('/admin', (req, res) => {
+    if(typeof req.cookies.leblebi !== "string") return res.status(401).send('Lütfen önce giriş yaptığınızdan emin olun')
+    if(req.cookies.leblebi === "YzRmM3J1MXUtYzFkMC1sdW1kLXVyYmVuaW0tbmUxMS1pc2sz"){
+        return res.send("bayrakbende{382dj82f9784ubnldasd3bayatlamayancerezibuldun3221qdqwtbagriyanik}");
     }
-    });
+    else{
+        const row = libSQL.prepare('SELECT * FROM leblebi WHERE cerez = ?').get(decrypt(req.cookies.leblebi));
+        if(row && row.cerez){
+            return res.status(403).send('Lütfen yönetici kısmına erişiminiz olduğundan emin olun')
+        }
+        else{
+            return res.status(400).send('Geçerli bir oturuma sahip olduğunuzdan emin olun')
+        }
+    }
+})
+
+
+app.get('/chat', (req, res) => {
+    return res.view('chat')
+})
+
+
+
+app.get('/logout', (req, res) => {
+    res.clearCookie('leblebi');
+    return res.send('Başarıyla çıkış yaptınız.')
+})
+
+
+
 
 app.post('/login', (req, res) => {
     const { kullanici, parola } = req.body;
@@ -78,8 +120,10 @@ app.post('/login', (req, res) => {
     try{
         const row = libSQL.prepare('SELECT * FROM leblebi WHERE kullanici_adi = ? AND parola = ?').get(kullanici, parola)
         if(!row) return res.view('login', { show: true, title: "Yok!", icon: "error", text: "Kullanıcı adı ve parola kombinasyonu eşleşmedi. ", confirmButtonText: "tamam!"})
-        else { res.view('login'), { show: true, title: "2FA", icon: "success", text: "yeni bir IP adresinden giriş yapmaktasınuz, lütfen e-postanızı kontrol edin "
-    }}
+        else {
+            if(row.rol === 0) res.view('login', { show: true, title: "2FA", icon: "success", text: "yeni bir IP adresinden giriş yapmaktasınız, lütfen e-postanızı kontrol edin ", confirmButtonText: "tamam!"});
+            if(row.rol === 1) return res.view('chat')
+        }
     }catch(err){
         console.error(err)
         return res.view('login', { show: true, title: "Başarı", icon: 'success', text: "tüh", confirmButtonText: "tmm" })
@@ -87,6 +131,20 @@ app.post('/login', (req, res) => {
 })  
 
 app.post('/signup', (req, res) => {
+    const { kullanici, parola, eposta } = req.body;
+
+  if(typeof kullanici !== "string" || typeof parola !== "string" || typeof eposta !== "string") return res.view('login', { show: true, title: "Tüh!", icon: "error", text: "Kullanıcı adı ve parola alanları gereklidir. ", confirmButtonText: "tamam!"})
+  const cerez = encrypt(btoa(require('crypto').randomUUID()));
+  try{
+    libSQL.prepare('INSERT INTO leblebi (kullanici_adi, parola, eposta, cerez, rol) VALUES (?, ?, ?, ?, ?)').run(kullanici, parola, eposta, cerez, 1)
+  }
+  catch(err){
+    console.error(err);
+    return res.view('login', { show: true, title: "Tüh!", icon: "error", text: "Girilen bilgilerde bir kullanıcı zaten var.", confirmButtonText: "tamam!"})
+  }
+  
+  return res.view('login', { show: true, title: "Başarı!", icon: "success", text: "Kullanıcı başarıyla oluşturuldu!", confirmButtonText: "tamam!"})
+      
 
 })
 
