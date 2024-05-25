@@ -3,10 +3,9 @@
 
 |    |  |
 | ------------- |:-------------:|
-| Zorluk        | Zor           |
+| Zorluk        | Orta          |
 | Sorulduğu Tur | Yarı Final    |
 | Soru Türü     | Web Güvenliği |
-
 ### Gereksinimler
 
 > [!TIP]  
