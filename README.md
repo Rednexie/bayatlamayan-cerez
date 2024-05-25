@@ -1,10 +1,11 @@
 ## Bayatlamayan Çerez
 
 
-BayrakSende CTF
-
-
-Yarı Final Sorusu
+|    |  |
+| ------------- |:-------------:|
+| Zorluk        | Zor           |
+| Sorulduğu Tur | Yarı Final    |
+| Soru Türü     | Web Güvenliği |
 
 ### Gereksinimler
 
