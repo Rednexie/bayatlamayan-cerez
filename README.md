@@ -1,5 +1,6 @@
 ## Bayatlamayan Çerez
 
+BayrakSendeCTF
 
 |    |  |
 | ------------- |:-------------:|
@@ -22,4 +23,3 @@
 
 
 
-> Sunucu daha tam ayarlı değil
