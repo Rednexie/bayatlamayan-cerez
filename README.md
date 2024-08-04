@@ -9,17 +9,11 @@ BayrakSendeCTF
 | Soru Türü     | Web Güvenliği |
 ### Gereksinimler
 
-> [!TIP]  
-> Web Security
 
-> [!TIP]
-> Kriptografi
-
-> [!TIP]
-> Code Review
-
-> [!TIP]
-> Scripting & Automation
+- Web Security
+- Kriptografi
+- Code Review
+- Scripting 
 
 
 
