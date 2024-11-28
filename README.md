@@ -8,8 +8,7 @@
 | Zorluk        | Orta          |
 | Sorulduğu Tur | Yarı Final    |
 | Soru Türü     | Web Güvenliği |
-
-
+| - - - - - - - |---------------|
 
 ###İlgili alanlar
 - Web Security
