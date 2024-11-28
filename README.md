@@ -8,7 +8,7 @@
 | Zorluk        | Orta          |
 | Sorulduğu Tur | Yarı Final    |
 | Soru Türü     | Web Güvenliği |
-
+| Çözümler      | 0             |
 
 
 
