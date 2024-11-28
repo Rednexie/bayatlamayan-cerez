@@ -10,6 +10,9 @@
 | Soru Türü     | Web Güvenliği |
 
 
+
+
+
 ###İlgili alanlar
 - Web Security
 - Kriptografi
