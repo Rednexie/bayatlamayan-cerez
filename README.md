@@ -21,3 +21,8 @@
 
 
 
+[writeup](writeup.md) 
+[yorum](yorum.md)
+
+
+
