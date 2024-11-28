@@ -13,7 +13,7 @@
 
 
 
-###İlgili alanlar
+### Sorunun alakalı olduğu alanlar
 - Web Security
 - Kriptografi
 - Code Review
