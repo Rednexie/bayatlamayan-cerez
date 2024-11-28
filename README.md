@@ -25,7 +25,5 @@
 
 
 
-[yorumum](yorum.md)
-
 
 
