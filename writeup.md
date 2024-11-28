@@ -30,5 +30,16 @@ https://github.com/linustorvalds1453/express-libsql-login
 Repository'de cerez.sqlite adında bir dosya bulunmakta. 
 
 ### Repository kodunun analizi
-Kod okunup analiz edilerek, uygulamanın 
+Kod okunup analiz edilerek, uygulamanın `leblebi` isimli çerez değerini kullanıcı kayıt olduğunda oluşturarak ve giriş yaptığında veritabanından alınarak ayarlandığı anlaşılırdı. 
+modules/encrypt.js içindeki fonksiyonun sunucu tarafından kullanıldığı görülebilirdi. Şifrelemede kullanılan anahtar ise .env dosyasından bulunabilirdi. 
+
+Ardından istenilen yazılım dilinde bir script yazılabilirdi. Script:
+
+- Önce veritabanını açar
+- Her satır için teker teker satırdaki çerez değerinin şifresini çözer. 
+- Cookie'deki leblebi değerini ayarlayacak şekilde isteği gönderir. 
+
+
+
+Farklı cevap kodu döndüren kullanıcının çereziyle giriş yapılarak bayrak alınırdı
 
