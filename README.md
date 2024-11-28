@@ -22,7 +22,10 @@
 
 
 [writeup](writeup.md) 
-[yorum](yorum.md)
+
+
+
+[yorumum](yorum.md)
 
 
 
