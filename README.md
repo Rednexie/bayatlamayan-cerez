@@ -1,6 +1,6 @@
 
 
-### bayraksende ctf'24 yarı final 
+### bayraksende ctf'24 yarı final turu
 ### Bayatlamayan Çerez
 
 |    |  |
@@ -14,8 +14,8 @@
 
 
 ### Sorunun alakalı olduğu alanlar
-- Web Security
-- Kriptografi
+- Web Güvenliği 
+- Kripto
 - Code Review
 - Scripting 
 
