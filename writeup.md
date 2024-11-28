@@ -33,6 +33,21 @@ Repository'de cerez.sqlite adında bir dosya bulunmakta.
 Kod okunup analiz edilerek, uygulamanın `leblebi` isimli çerez değerini kullanıcı kayıt olduğunda oluşturarak ve giriş yaptığında veritabanından alınarak ayarlandığı anlaşılırdı. 
 modules/encrypt.js içindeki fonksiyonun sunucu tarafından kullanıldığı görülebilirdi. Şifrelemede kullanılan anahtar ise .env dosyasından bulunabilirdi. 
 
+
+`decrypt.js`
+```js
+function decrypt(encryptedText) {
+    const decipher = require('crypto').createDecipheriv('aes-256-ecb', Buffer.from("13d60426-d8c7-46c4-a8b5-2cabe467"), null);
+    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+  }
+
+
+```
+
+
+
 Ardından istenilen yazılım dilinde bir script yazılabilirdi. Script:
 
 - Önce veritabanını açar
