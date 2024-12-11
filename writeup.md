@@ -1,4 +1,4 @@
-#Çözüm
+# Çözüm
 
 
 ### Git klasörünü bulma
